@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.insa.test.dao.InsaDao" >
+
+ 
+   	 <!-- 조회 -->
+	<select id="insaList" resultType="Insa" parameterType="hashmap">
+      SELECT 
+         *
+      FROM INSA
+      order by sabun desc
+      
+   </select>
+   
+   <!-- 공통코드 테이블 -->
+   
+   <select id="mTypeList"  resultType="insaCom" parameterType="hashmap">
+   		SELECT * FROM INSA_COM 
+   		WHERE gubun = 'A01'
+   </select>
+   
+   <select id="milLevelList"  resultType="insaCom" parameterType="hashmap">
+   		SELECT * FROM INSA_COM 
+   		WHERE gubun = 'A02'
+   </select>
+   
+   <select id="posGbnCodeList"  resultType="insaCom" parameterType="hashmap">
+   		SELECT * FROM INSA_COM 
+   		WHERE gubun = 'A03'
+   </select>
+   
+   <select id="deptCodeList"  resultType="insaCom" parameterType="hashmap">
+   		SELECT * FROM INSA_COM 
+   		WHERE gubun = 'A04'
+   </select>
+   
+   <select id="joinGbnCodeList"  resultType="insaCom" parameterType="hashmap">
+   		SELECT * FROM INSA_COM 
+   		WHERE gubun = 'A05'
+   </select>
+   
+   <select id="joinTypeList"  resultType="insaCom" parameterType="hashmap">
+   		SELECT * FROM INSA_COM 
+   		WHERE gubun = 'A06'
+   </select>
+   
+   <select id="gartLevelList"  resultType="insaCom" parameterType="hashmap">
+   		SELECT * FROM INSA_COM 
+   		WHERE gubun = 'A07'
+   </select>
+   
+   <select id="kosaClassCodeList" resultType="insaCom" parameterType="hashmap">
+   		SELECT * FROM INSA_COM 
+   		WHERE gubun = 'A08'
+   </select>
+   
+   <!-- 인사정보 입력-->
+   <insert id="insertInsa" parameterType="Insa">
+   INSERT INTO INSA (sabun, join_day, retire_day, put_yn, name, reg_no, eng_name, phone,hp, carrier,
+			pos_gbn_code, cmp_reg_no,cmp_reg_image, sex, years,email, zip, addr1, addr2,dept_code, join_gbn_code,
+			id, pwd, salary, kosa_reg_yn, kosa_class_code,mil_yn, mil_type,mil_level,mil_startdate,mil_enddate,
+			join_type,gart_level,self_intro,crm_name,profile_image,carrier_image)
+   values(#{sabun}, #{joinDay}, #{retireDay}, #{putYn}, #{name}, #{regNo}, #{engName}, #{phone}, #{hp}, 
+            #{carrier}, #{posGbnCode}, #{cmpRegNo}, #{cmpRegImage}, #{sex}, #{years}, #{email}, #{zip}, 
+            #{addr1}, #{addr2}, #{deptCode}, #{joinGbnCode}, #{id}, #{pwd}, #{salary}, #{kosaRegYn}, 
+            #{kosaClassCode}, #{milYn}, #{milType}, #{milLevel}, #{milStartdate}, #{milEnddate}, #{joinType}, 
+            #{gartLevel}, #{selfIntro}, #{crmName}, #{profileImage}, #{carrierImage})
+   </insert>
+
+
+   <select id="getInsaCount" parameterType="hashmap" resultType="int">
+      select
+         count(sabun)
+      from INSA   
+   </select>
+   
+   <select id="getInfo" resultType="Insa" resultMap="insaResultMap">
+      select
+       * 
+       from INSA
+       where sabun = #{sabun}
+   </select>
+   
+   <update id="updateInsa" parameterType="Insa">
+      update INSA
+         set sabun = #{sabun}, name1 = #{name1}, eng_name = #{engName}, id1 = #{id1}, phone = #{phone}, hp = #{hp}, 
+               reg_no = #{regNo}, years1 = #{years1}, sex = #{sex}, email = #{email}, zip = #{zip}, addr1 = #{addr1}, 
+               addr2 = #{addr2}, job_type = #{jobType}, salary = #{salary}, gart_level = #{gartLevel}, put_yn = #{putYn}, mil_yn = #{milYn}, 
+               mil_type = #{milType}, mil_level = #{milLevel}, mil_startdate = #{milStartdate}, mil_enddate = #{milEnddate}, kosa_reg_yn = #{kosaRegYn}, 
+               kosa_class_code = #{kosaClassCode}, join_day = #{joinDay}, retire_day = #{retireDay}, crm_name = #{crmName}, cmp_reg_no = #{cmpRegNo}, 
+               cmp_reg_image = #{cmpRegImage}, carrier = #{carrier}, profile1 = #{profile1}, self_intro = #{selfIntro}
+         where sabun = #{sabun}
+   </update>
+   
+   <delete id="deleteInsa">
+      delete from INSA
+      where sabun = #{sabun}
+   </delete>
+   
+   
+   <resultMap id="insaResultMap" type="Insa">
+      <id property="sabun" column="sabun"/>
+      <result property="name" column="name"/>
+      <result property="engName" column="eng_name"/>
+      <result property="id" column="id"/>
+      <result property="pwd" column="pwd"/>
+      <result property="phone" column="phone"/>
+      <result property="hp" column="hp"/>
+      <result property="regNo" column="reg_no"/>
+      <result property="years" column="years"/>
+      <result property="sex" column="sex"/>
+      <result property="email" column="email"/>
+      <result property="zip" column="zip"/>
+      <result property="addr1" column="addr1"/>
+      <result property="addr2" column="addr2"/>
+      <result property="joinType" column="join_type"/>
+      <result property="salary" column="salary"/>
+      <result property="gartLevel" column="gart_level"/>
+      <result property="putYn" column="put_yn"/>
+      <result property="milYn" column="mil_yn"/>
+      <result property="milType" column="mil_type"/>
+      <result property="milLevel" column="mil_level"/>
+      <result property="milStartdate" column="mil_startdate"/>
+      <result property="milEnddate" column="mil_enddate"/>
+      <result property="kosaRegYn" column="kosa_reg_yn"/>
+      <result property="kosaClassCode" column="kosa_class_code"/>
+      <result property="joinDay" column="join_day"/>
+      <result property="retireDay" column="retire_day"/>
+      <result property="crmName" column="crm_name"/>
+      <result property="cmpRegNo" column="cmp_reg_no"/>
+      <result property="cmpRegImage" column="cmp_reg_image"/>
+      <result property="carrier" column="carrier"/>
+     <result property="profileImage" column="profile_image"/>
+      <result property="selfIntro" column="self_intro"/>
+      <result property="posGbnCode" column="pos_gbn_code"/>
+      <result property="deptCode" column="dept_code"/>
+      <result property="joinGbnCode" column="join_gbn_code"/>
+      <result property="carrierImage" column="carrier_image" />
+   </resultMap>
+</mapper>   
+
